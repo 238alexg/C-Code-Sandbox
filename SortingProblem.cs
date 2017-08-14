@@ -6,21 +6,44 @@ namespace CodeSandbox
 	class MainClass
 	{
 		public static bool DEBUG;
+        public static bool TIME;
+        public static int ITERATIONS;
 
 		public static void Main(string[] args)
 		{
-			string response = "\n";
+			string response = "";
 
 			while (response != "n" && response != "y")
 			{
-				// Suspend the screen.
 				Console.Write("Run in debug mode? Type y or n: ");
 
 				// Get response
 				response = Console.ReadLine();
 			}
 
-			DEBUG = (response == "y");
+            DEBUG = (response == "y");
+            response = "";
+
+			while (response != "n" && response != "y")
+			{
+				Console.Write("Time sort versus native C# sort algorithm? Type y or n: ");
+
+				// Get response
+				response = Console.ReadLine();
+			}
+
+            TIME = (response == "y");
+
+            if (TIME) {
+                response = "";
+
+                while (!int.TryParse(response, out ITERATIONS)) {
+					Console.Write("How many sort iterations? Type a number: ");
+
+					// Get response
+					response = Console.ReadLine();
+                }
+            }
 
 			int counter = 0;
 
@@ -38,12 +61,16 @@ namespace CodeSandbox
 				Console.WriteLine("File pathway: " + filePath);
 			}
 
-			string line;
+            if (TIME) {
+                SortTest(ITERATIONS, filePath);
+                return;
+            }
 
 			// Read the file and display it line by line.
 			System.IO.StreamReader file =
 					  new System.IO.StreamReader(filePath);
-
+            
+            string line;
 			while ((line = file.ReadLine()) != null)
 			{
 
@@ -53,12 +80,13 @@ namespace CodeSandbox
 				}
 
 				List<int> unsorted = StringToIntList(line);
+                List<int> sorted;
 
 				Console.WriteLine("Unsorted list: " + ListToString(unsorted));
 
-				List<int> sorted = SortNumbers(unsorted);
+                sorted = SortNumbers(unsorted);
 
-                Console.WriteLine("Sorted list: " + ListToString(sorted) + System.Environment.NewLine);
+				Console.WriteLine("Sorted list: " + ListToString(sorted) + System.Environment.NewLine);
 
 				counter++;
 			}
@@ -95,6 +123,47 @@ namespace CodeSandbox
 			return unsorted;
 		}
 
+        public static void SortTest(int iterations, string filePath) {
+
+            System.Diagnostics.Stopwatch mySortSW = System.Diagnostics.Stopwatch.StartNew();
+            System.Diagnostics.Stopwatch nativeSW = System.Diagnostics.Stopwatch.StartNew();
+
+            mySortSW.Stop();
+            nativeSW.Stop();
+
+            for (int i = 0; i < iterations; i++) {
+				// Read the file and display it line by line.
+				System.IO.StreamReader file =
+						  new System.IO.StreamReader(filePath);
+
+                int counter = 0;
+				string line;
+				while ((line = file.ReadLine()) != null)
+				{
+
+					
+					List<int> unsorted = StringToIntList(line);
+					List<int> sorted;
+
+                    mySortSW.Start();
+					sorted = SortNumbers(unsorted);
+                    mySortSW.Stop();
+
+                    nativeSW.Start();
+					unsorted.Sort();
+                    nativeSW.Stop();
+
+					counter++;
+				}
+
+                file.Close();
+            }
+
+            Console.WriteLine(iterations + " Native C# Sorts took " + nativeSW.Elapsed.TotalMilliseconds + " ms");
+            Console.WriteLine(iterations + " of my sorts took " + mySortSW.Elapsed.TotalMilliseconds + " ms");
+        }
+
+
 		// Concatenates all list items onto a string
 		// Returns string with all list values
 		public static string ListToString(List<int> list)
@@ -109,7 +178,7 @@ namespace CodeSandbox
 			return s;
 		}
 
-		// Takes an unsorted list of integers and sorts them in nlog(n) time
+		// Takes an unsorted list of integers and sorts them in n^2 time
 		// Returns sorted list of integers, from smallest to largest
 		public static List<int> SortNumbers(List<int> unsorted)
 		{
@@ -195,8 +264,6 @@ namespace CodeSandbox
 						sorted.Insert(index + 1, val);
 					}
 				}
-
-				
 			}
 
 			return sorted;

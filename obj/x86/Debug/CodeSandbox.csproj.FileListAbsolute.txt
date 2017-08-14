@@ -4,3 +4,9 @@
 /Users/alexgeoffrey/Projects/SortingProblem/CodeSandbox/obj/x86/Debug/CodeSandbox.exe
 /Users/alexgeoffrey/Projects/SortingProblem/CodeSandbox/obj/x86/Debug/CodeSandbox.pdb
 /Users/alexgeoffrey/Projects/SortingProblem/CodeSandbox/obj/x86/Debug/CodeSandbox.csprojResolveAssemblyReference.cache
+/Users/alexgeoffrey/Projects/CodeSandbox/CodeSandbox/bin/Debug/CodeSandbox.exe
+/Users/alexgeoffrey/Projects/CodeSandbox/CodeSandbox/bin/Debug/CodeSandbox.pdb
+/Users/alexgeoffrey/Projects/CodeSandbox/CodeSandbox/obj/x86/Debug/CodeSandbox.csprojResolveAssemblyReference.cache
+/Users/alexgeoffrey/Projects/CodeSandbox/CodeSandbox/obj/x86/Debug/CodeSandbox.csproj.CoreCompileInputs.cache
+/Users/alexgeoffrey/Projects/CodeSandbox/CodeSandbox/obj/x86/Debug/CodeSandbox.exe
+/Users/alexgeoffrey/Projects/CodeSandbox/CodeSandbox/obj/x86/Debug/CodeSandbox.pdb
